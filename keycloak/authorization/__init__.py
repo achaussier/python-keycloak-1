@@ -60,7 +60,7 @@ class Authorization:
                 config_groups = json.loads(pol['config']['groups'])
                 for group in config_groups:
                     policy.add_group(Group(name=group['path'],
-                                           extendChildren=group['extendChildren']))
+                                           extend_children=group['extendChildren']))
 
                 self.policies[policy.name] = policy
 

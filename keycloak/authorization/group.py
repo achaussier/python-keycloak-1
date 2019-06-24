@@ -31,9 +31,9 @@ class Group:
 
     """
 
-    def __init__(self, name, required=False):
+    def __init__(self, name, extend_children=False):
         self.name = name
-        self.required = required
+        self.extend_children = extend_children
 
     @property
     def get_name(self):
