@@ -18,6 +18,7 @@
 import ast
 import json
 
+from .group import Group
 from .permission import Permission
 from .policy import Policy
 from .role import Role
@@ -50,6 +51,19 @@ class Authorization:
         :return:
         """
         for pol in data['policies']:
+            if pol['type'] == 'group':
+                policy = Policy(name=pol['name'],
+                                type=pol['type'],
+                                logic=pol['logic'],
+                                decision_strategy=pol['decisionStrategy'])
+
+                config_groups = json.loads(pol['config']['groups'])
+                for group in config_groups:
+                    policy.add_group(Group(name=group['path'],
+                                           extendChildren=group['extendChildren']))
+
+                self.policies[policy.name] = policy
+
             if pol['type'] == 'role':
                 policy = Policy(name=pol['name'],
                                 type=pol['type'],

@@ -43,6 +43,7 @@ class Policy:
         self._logic = logic
         self._decision_strategy = decision_strategy
         self._roles = []
+        self._groups = []
         self._permissions = []
 
     def __repr__(self):
@@ -84,12 +85,28 @@ class Policy:
         self._decision_strategy = value
 
     @property
+    def groups(self):
+        return self._groups
+
+    @property
     def roles(self):
         return self._roles
 
     @property
     def permissions(self):
         return self._permissions
+
+    def add_group(self, group):
+        """
+        Add keycloak group in policy.
+
+        :param group: keycloak group.
+        :return:
+        """
+        if self.type != 'group':
+            raise KeycloakAuthorizationConfigError(
+                "Can't add group. Policy type is different of group")
+        self._groups.append(group)
 
     def add_role(self, role):
         """
